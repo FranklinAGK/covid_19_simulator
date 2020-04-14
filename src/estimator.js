@@ -5,7 +5,6 @@ const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 })
-const data="";
 
 const covid19ImpactEstimator = (data) =>
 {
@@ -34,15 +33,14 @@ const covid19ImpactEstimator = (data) =>
 	const casesForVentilatorsByRequestedTime_severe=Math.floor(0.02*infectionsByRequestedTime_severe);
 	//dollarsInFlight
 	//65% of the region (the majority) earn average pay from data
-	const dollarsInFlight=0.65*infectionsByRequestedTime;
-	dollarsInFlight=dollarsInFlight*data.region.avgDailyIncomeInUSD;
-	dollarsInFlight=Math.floor(dollarsInFlight/data.timeToElapse);
+	const dollarsInFlight=Math.floor((0.65*infectionsByRequestedTime*data.region.avgDailyIncomeInUSD)/data.timeToElapse);
 
-	const dollarsInFlight_severe=0.65*infectionsByRequestedTime_severe;
-	dollarsInFlight_severe=dollarsInFlight_severe*data.region.avgDailyIncomeInUSD;
-	dollarsInFlight_severe=Math.floor(dollarsInFlight_severe/data.timeToElapse);
+	//dollarsInFlight=Math.floor(dollarsInFlight);
 
-	const data=data;
+	const dollarsInFlight_severe=Math.floor((0.65*infectionsByRequestedTime_severe*data.region.avgDailyIncomeInUSD)/data.timeToElapse);
+	
+
+	//const data=data;
 	const impact={
 		"currentlyInfected":currentlyInfected,
 		"infectionsByRequestedTime":infectionsByRequestedTime,
@@ -68,7 +66,7 @@ const covid19ImpactEstimator = (data) =>
 	console.log(impact);
 	console.log("\n Severe Impact estimation : ");
 	console.log(severeImpact);
-	return covid19ImpactEstimator;
+	return startServer(data);
 }
 
 
@@ -102,7 +100,7 @@ collectData =()=>
     break;
 }
 
-  data={
+  const data={
 region: {
 name: regionName,
 avgAge: Math.floor(avAge),
@@ -115,12 +113,11 @@ reportedCases: Math.floor(repCases),
 population: Math.floor(populationz),
 totalHospitalBeds: Math.floor(totalBeds)
 };
-//console.log(data);
+console.log(data);
 
   readline.close();
-  startServer();
 
-  /*covid19ImpactEstimator(data);*/
+covid19ImpactEstimator(data);
 
 
 });
@@ -142,16 +139,16 @@ totalHospitalBeds: Math.floor(totalBeds)
 
 }
 
-startServer =()=>
+startServer =(data)=>
 {
-const ms=0;
+
 const x=JSON.stringify(data);
 app.post('/api/v1/on-covid-19', function (req, res) {
   res.send(x);
   console.log(x);
 });
 
-covid19ImpactEstimator(data);
+//covid19ImpactEstimator(data);
 
 
 
@@ -162,8 +159,8 @@ app.get("/api/v1/on-covid-19", (req, res, next) => {
  ms=new Date() - start + ' ms';
  //console.log(data);
  console.log('Request took:', ms);
- const xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
- fs.appendFileSync('log.json', xx);
+ const x1="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
+ fs.appendFileSync('log.json', x1);
  console.log('Request took:', ms);
  
 });
@@ -171,11 +168,11 @@ app.get("/api/v1/on-covid-19", (req, res, next) => {
 app.get("/api/v1/on-covid-19/logs", (req, res, next) => {
  res.json(data);
  
- const start = new Date();
- ms=new Date() - start + ' ms';
+ const start2 = new Date();
+ ms=new Date() - start2 + ' ms';
  //console.log(data);
- const xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
- fs.appendFileSync('log.json', xx);
+ const x2="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
+ fs.appendFileSync('log.json', x2);
  console.log('Request took:', ms);
  
 });
@@ -183,11 +180,11 @@ app.get("/api/v1/on-covid-19/logs", (req, res, next) => {
 app.get("/api/v1/on-covid-19/xml", (req, res, next) => {
  res.json(data);
  
- const start = new Date();
- ms=new Date() - start + ' ms';
+ const start3 = new Date();
+ ms=new Date() - start3 + ' ms';
  //console.log(data);
- const xx="\nGet\t /api/v1/on-covid-19/xml \t200\t"+ms+"\t";
- fs.appendFileSync('log.xml', xx);
+ const x3="\nGet\t /api/v1/on-covid-19/xml \t200\t"+ms+"\t";
+ fs.appendFileSync('log.xml', x3);
  console.log('Request took:', ms);
  
 });
@@ -197,6 +194,8 @@ app.listen(8080, () => {
 });
 
 }
+
+
 collectData();
 exports = covid19ImpactEstimator;
 
