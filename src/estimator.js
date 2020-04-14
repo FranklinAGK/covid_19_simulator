@@ -2,8 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 const readline = require('readline').createInterface({
-input: process.stdin,
-output: process.stdout
+	input: process.stdin,
+	output: process.stdout
 })
 /*data={
 region: {
