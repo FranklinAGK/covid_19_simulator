@@ -118,6 +118,7 @@ totalHospitalBeds: Math.floor(totalBeds)
 
   readline.close();
   startServer();
+  return covid19ImpactEstimator;
   /*covid19ImpactEstimator(data);*/
 
 
@@ -197,7 +198,7 @@ app.listen(8080, () => {
 }
 collectData();
 exports = covid19ImpactEstimator;
-return covid19ImpactEstimator;
+
 //return covid19ImpactEstimator(data);
 
 
