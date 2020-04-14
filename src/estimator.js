@@ -6,6 +6,7 @@ const readline = require('readline').createInterface({
   output: process.stdout
 })
 var data;
+
 const covid19ImpactEstimator = (data) =>
 {
 	const currentlyInfected= data.reportedCases *10;
@@ -68,7 +69,7 @@ const covid19ImpactEstimator = (data) =>
 	console.log("\n Severe Impact estimation : ");
 	console.log(severeImpact);
 }
-exports = covid19ImpactEstimator;
+
 
 collectData =()=>
 {
@@ -194,8 +195,9 @@ app.listen(8080, () => {
 });
 
 }
-
-return collectData();
+collectData();
+exports = covid19ImpactEstimator;
+return covid19ImpactEstimator;
 //return covid19ImpactEstimator(data);
 
 
