@@ -1,5 +1,4 @@
 var express = require("express");
-const fs = require('fs');
 var app = express();
 const readline = require('readline').createInterface({
   input: process.stdin,
@@ -117,7 +116,7 @@ totalHospitalBeds: Math.floor(totalBeds)
 
   readline.close();
   startServer();
-  /*covid19ImpactEstimator(data);*/
+  covid19ImpactEstimator(data);
 
 
 });
@@ -148,45 +147,13 @@ app.post('/api/v1/on-covid-19', function (req, res) {
   console.log(x);
 });
 
-covid19ImpactEstimator(data);
-
-
-
 app.get("/api/v1/on-covid-19", (req, res, next) => {
  res.json(data);
  
  var start = new Date();
  ms=new Date() - start + ' ms';
- //console.log(data);
+ console.log(data);
  console.log('Request took:', ms);
- var xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
- fs.appendFileSync('log.json', xx);
- console.log('Request took:', ms);
- 
-});
-
-app.get("/api/v1/on-covid-19/logs", (req, res, next) => {
- res.json(data);
- 
- var start = new Date();
- ms=new Date() - start + ' ms';
- //console.log(data);
- var xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
- fs.appendFileSync('log.json', xx);
- console.log('Request took:', ms);
- 
-});
-
-app.get("/api/v1/on-covid-19/xml", (req, res, next) => {
- res.json(data);
- 
- var start = new Date();
- ms=new Date() - start + ' ms';
- //console.log(data);
- var xx="\nGet\t /api/v1/on-covid-19/xml \t200\t"+ms+"\t";
- fs.appendFileSync('log.xml', xx);
- console.log('Request took:', ms);
- 
 });
 
 app.listen(8080, () => {
