@@ -5,23 +5,44 @@ const readline = require('readline').createInterface({
  input: process.stdin,
  output: process.stdout
 })
+/*data={
+region: {
+name: "Africa",
+avgAge: 19.7,
+avgDailyIncomeInUSD: 5,
+avgDailyIncomePopulation: 0.71
+},
+periodType: "days",
+timeToElapse: 58,
+reportedCases: 674,
+population: 66622705,
+totalHospitalBeds: 1380614
+};*/
 
-const covid19ImpactEstimator = (data) =>
+
+get_power= (x)=>
 {
+	for (i= 1; i <= x; ++i)
+    {
+       power_result=x*2;
+       //console.log(power_result)
+    }
+    //return power_result
+}
+const covid19ImpactEstimator = (data) =>
+{	
+	const power= 1;
+	const power_result=1;
 	const currentlyInfected= data.reportedCases * 10;
 	const severeImpactCurrentlyInfected= data.reportedCases * 50;
 	// demo day for testing is 58 as ref in the data json object, this can be changed later. 
 	const inputDays= data.timeToElapse;
 	const sample= Math.floor(inputDays / 3);
 	//convert to whole number
-	const power= 1;
-	for (const i= 1; i <= sample; ++i)
-    {
-       power= power * 2;
-       console.log(power);
-    }
-	const infectionsByRequestedTime= Math.floor(currentlyInfected * power);
-	const infectionsByRequestedTime_severe= Math.floor(severeImpactCurrentlyInfected * power);
+	get_power(sample);
+    //console.log(power);
+	const infectionsByRequestedTime= Math.floor(currentlyInfected * power_result);
+	const infectionsByRequestedTime_severe= Math.floor(severeImpactCurrentlyInfected * power_result);
 	//15% is also 
 	const severeCasesByRequestedTime= Math.floor(0.15 * infectionsByRequestedTime);
 	const severeCasesByRequestedTime_severe= Math.floor(0.15 * infectionsByRequestedTime_severe);
@@ -72,13 +93,14 @@ const covid19ImpactEstimator = (data) =>
 	console.log(impact);
 	console.log('\n Severe Impact estimation : ');
 	console.log(severeImpact);
-	return startServer(data);
+	startServer(data);
 }
 
 
 collectData = () =>
 {
 	console.log('\nStarting COVID-19 estimator....\n');
+	var a="days";
 	readline.question('Country/continent name ?\n', (regionName)=> {
  readline.question('Average Age ?\n', (avAge)=> {
  readline.question('Average income(in dollars) ?\n', (avIncome)=> {
@@ -119,12 +141,9 @@ reportedCases: Math.floor(repCases),
 population: Math.floor(populationz),
 totalHospitalBeds: Math.floor(totalBeds)
 };
-console.log(data);
-
+//console.log(data);
  readline.close();
-
-covid19ImpactEstimator(data);
-
+ covid19ImpactEstimator(data);
 
 });
 });

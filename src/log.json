@@ -39,3 +39,5 @@ Get	 /api/v1/on-covid-19/logs 	200	0 ms
 Get	 /api/v1/on-covid-19/logs 	200	0 ms	
 Get	 /api/v1/on-covid-19/logs 	200	0 ms	
 Get		 /api/v1/on-covid-19/logs 		200		0 ms		
+Get		 /api/v1/on-covid-19/logs 		200		0 ms		
+Get		 /api/v1/on-covid-19/logs 		200		0 ms		
