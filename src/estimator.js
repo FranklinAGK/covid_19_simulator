@@ -5,7 +5,7 @@ const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 })
-const data;
+const data="";
 
 const covid19ImpactEstimator = (data) =>
 {
