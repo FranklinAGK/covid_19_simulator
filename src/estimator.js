@@ -68,6 +68,7 @@ const covid19ImpactEstimator = (data) =>
 	console.log(impact);
 	console.log("\n Severe Impact estimation : ");
 	console.log(severeImpact);
+	return covid19ImpactEstimator;
 }
 
 
@@ -118,7 +119,7 @@ totalHospitalBeds: Math.floor(totalBeds)
 
   readline.close();
   startServer();
-  return covid19ImpactEstimator;
+
   /*covid19ImpactEstimator(data);*/
 
 
