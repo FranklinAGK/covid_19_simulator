@@ -1,19 +1,19 @@
-var express = require("express");
+const express = require("express");
 const fs = require('fs');
-var app = express();
+const app = express();
 const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 })
-var data;
+const data;
 
 const covid19ImpactEstimator = (data) =>
 {
 	const currentlyInfected= data.reportedCases *10;
 	const severeImpactCurrentlyInfected= data.reportedCases *50;
 	// demo day for testing is 58 as ref in the data json object,  this can be changed later. 
-	var inputDays=data.timeToElapse;
-	var sample=Math.floor(inputDays/3);
+	const inputDays=data.timeToElapse;
+	const sample=Math.floor(inputDays/3);
 	//convert to whole number
 	const infectionsByRequestedTime= currentlyInfected*Math.pow(2, sample);
 	const infectionsByRequestedTime_severe= severeImpactCurrentlyInfected*Math.pow(2, sample);
@@ -34,16 +34,16 @@ const covid19ImpactEstimator = (data) =>
 	const casesForVentilatorsByRequestedTime_severe=Math.floor(0.02*infectionsByRequestedTime_severe);
 	//dollarsInFlight
 	//65% of the region (the majority) earn average pay from data
-	var dollarsInFlight=0.65*infectionsByRequestedTime;
+	const dollarsInFlight=0.65*infectionsByRequestedTime;
 	dollarsInFlight=dollarsInFlight*data.region.avgDailyIncomeInUSD;
 	dollarsInFlight=Math.floor(dollarsInFlight/data.timeToElapse);
 
-	var dollarsInFlight_severe=0.65*infectionsByRequestedTime_severe;
+	const dollarsInFlight_severe=0.65*infectionsByRequestedTime_severe;
 	dollarsInFlight_severe=dollarsInFlight_severe*data.region.avgDailyIncomeInUSD;
 	dollarsInFlight_severe=Math.floor(dollarsInFlight_severe/data.timeToElapse);
 
-	var data=data;
-	var impact={
+	const data=data;
+	const impact={
 		"currentlyInfected":currentlyInfected,
 		"infectionsByRequestedTime":infectionsByRequestedTime,
 		"severeCasesByRequestedTime":severeCasesByRequestedTime,
@@ -53,7 +53,7 @@ const covid19ImpactEstimator = (data) =>
 		"dollarsInFlight":dollarsInFlight
 
 	};
-	var severeImpact={
+	const severeImpact={
 		"currentlyInfected":severeImpactCurrentlyInfected,
 		"infectionsByRequestedTime":infectionsByRequestedTime_severe,
 		"severeCasesByRequestedTime":severeCasesByRequestedTime_severe,
@@ -144,8 +144,8 @@ totalHospitalBeds: Math.floor(totalBeds)
 
 startServer =()=>
 {
-var ms=0;
-var x=JSON.stringify(data);
+const ms=0;
+const x=JSON.stringify(data);
 app.post('/api/v1/on-covid-19', function (req, res) {
   res.send(x);
   console.log(x);
@@ -158,11 +158,11 @@ covid19ImpactEstimator(data);
 app.get("/api/v1/on-covid-19", (req, res, next) => {
  res.json(data);
  
- var start = new Date();
+ const start = new Date();
  ms=new Date() - start + ' ms';
  //console.log(data);
  console.log('Request took:', ms);
- var xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
+ const xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
  fs.appendFileSync('log.json', xx);
  console.log('Request took:', ms);
  
@@ -171,10 +171,10 @@ app.get("/api/v1/on-covid-19", (req, res, next) => {
 app.get("/api/v1/on-covid-19/logs", (req, res, next) => {
  res.json(data);
  
- var start = new Date();
+ const start = new Date();
  ms=new Date() - start + ' ms';
  //console.log(data);
- var xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
+ const xx="\nGet\t /api/v1/on-covid-19/logs \t200\t"+ms+"\t";
  fs.appendFileSync('log.json', xx);
  console.log('Request took:', ms);
  
@@ -183,10 +183,10 @@ app.get("/api/v1/on-covid-19/logs", (req, res, next) => {
 app.get("/api/v1/on-covid-19/xml", (req, res, next) => {
  res.json(data);
  
- var start = new Date();
+ const start = new Date();
  ms=new Date() - start + ' ms';
  //console.log(data);
- var xx="\nGet\t /api/v1/on-covid-19/xml \t200\t"+ms+"\t";
+ const xx="\nGet\t /api/v1/on-covid-19/xml \t200\t"+ms+"\t";
  fs.appendFileSync('log.xml', xx);
  console.log('Request took:', ms);
  
