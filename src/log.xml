@@ -1,2 +1,4 @@
 
 Get	 /api/v1/on-covid-19/xml 	200	1 ms	
+Get		 /api/v1/on-covid-19/xml 		200		0 ms		
+Get		 /api/v1/on-covid-19/xml 		200		0 ms		
