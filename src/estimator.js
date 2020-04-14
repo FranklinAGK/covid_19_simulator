@@ -1,4 +1,4 @@
-const express =  require("express");
+const express =  require('express');
 const fs =  require('fs');
 const app =  express();
 const readline =  require('readline').createInterface({
@@ -48,29 +48,29 @@ const covid19ImpactEstimator =  (data)  =>
 
 	//const data= data;
 	const impact= {
-		"currentlyInfected":currentlyInfected,
-		"infectionsByRequestedTime":infectionsByRequestedTime,
-		"severeCasesByRequestedTime":severeCasesByRequestedTime,
-		"hospitalBedsByRequestedTime":hospitalBedsByRequestedTime,
-		"casesForICUByRequestedTime":casesForICUByRequestedTime,
-		"casesForVentilatorsByRequestedTime":casesForVentilatorsByRequestedTime,
-		"dollarsInFlight":dollarsInFlight
+		'currentlyInfected':currentlyInfected,
+		'infectionsByRequestedTime':infectionsByRequestedTime,
+		'severeCasesByRequestedTime':severeCasesByRequestedTime,
+		'hospitalBedsByRequestedTime':hospitalBedsByRequestedTime,
+		'casesForICUByRequestedTime':casesForICUByRequestedTime,
+		'casesForVentilatorsByRequestedTime':casesForVentilatorsByRequestedTime,
+		'dollarsInFlight':dollarsInFlight
 
 	};
 	const severeImpact= {
-		"currentlyInfected":severeImpactCurrentlyInfected,
-		"infectionsByRequestedTime":infectionsByRequestedTime_severe,
-		"severeCasesByRequestedTime":severeCasesByRequestedTime_severe,
-		"hospitalBedsByRequestedTime":hospitalBedsByRequestedTime_severe,
-		"casesForICUByRequestedTime":casesForICUByRequestedTime_severe,
-		"casesForVentilatorsByRequestedTime":casesForVentilatorsByRequestedTime_severe,
-		"dollarsInFlight":dollarsInFlight_severe
+		'currentlyInfected':severeImpactCurrentlyInfected,
+		'infectionsByRequestedTime':infectionsByRequestedTime_severe,
+		'severeCasesByRequestedTime':severeCasesByRequestedTime_severe,
+		'hospitalBedsByRequestedTime':hospitalBedsByRequestedTime_severe,
+		'casesForICUByRequestedTime':casesForICUByRequestedTime_severe,
+		'casesForVentilatorsByRequestedTime':casesForVentilatorsByRequestedTime_severe,
+		'dollarsInFlight':dollarsInFlight_severe
 	};
-	console.log("\n Data used : ");
+	console.log('\n Data used : ');
 	console.log(data);
-	console.log("\n Possible impact estimation : ");
+	console.log('\n Possible impact estimation : ');
 	console.log(impact);
-	console.log("\n Severe Impact estimation : ");
+	console.log('\n Severe Impact estimation : ');
 	console.log(severeImpact);
 	return startServer(data);
 }
@@ -78,7 +78,7 @@ const covid19ImpactEstimator =  (data)  =>
 
 collectData = () =>
 {
-	console.log("\nStarting COVID-19 estimator....\n");
+	console.log('\nStarting COVID-19 estimator....\n');
 	readline.question('Country/continent name ?\n', (regionName)  => {
   readline.question('Average Age ?\n', (avAge)  => {
   readline.question('Average income(in dollars) ?\n', (avIncome)  => {
@@ -91,16 +91,16 @@ collectData = () =>
 
   	switch (type) 
 	{
-  case "days":
+  case 'days':
 	
 	a= days;
     break;
-  case "weeks":
+  case 'weeks':
   	//There would always be 7 days in a week.
   	a= days * 7;
 
     break;
-  case "months":
+  case 'months':
   	//from description, assume that there would always be 30 days in a month.
   	a= days * 30;
     break;
@@ -158,45 +158,45 @@ app.post('/api/v1/on-covid-19', function (req, res) {
 
 
 
-app.get("/api/v1/on-covid-19", (req, res, next)  => {
+app.get('/api/v1/on-covid-19', (req, res, next)  => {
  res.json(data);
  
  const start =  new Date();
  ms= new Date() - start + ' ms';
  //console.log(data);
  console.log('Request took:', ms);
- const x1= "\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t"+ms+"\t\t";
+ const x1= '\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t'+ms+'\t\t';
  fs.appendFileSync('log.json', x1);
  console.log('Request took:', ms);
  
 });
 
-app.get("/api/v1/on-covid-19/logs", (req, res, next)  => {
+app.get('/api/v1/on-covid-19/logs', (req, res, next)  => {
  res.json(data);
  
  const start2 =  new Date();
  ms= new Date() - start2 + ' ms';
  //console.log(data);
- const x2= "\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t"+ms+"\t\t";
+ const x2= '\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t'+ms+'\t\t';
  fs.appendFileSync('log.json', x2);
  console.log('Request took:', ms);
  
 });
 
-app.get("/api/v1/on-covid-19/xml", (req, res, next)  => {
+app.get('/api/v1/on-covid-19/xml', (req, res, next)  => {
  res.json(data);
  
  const start3 =  new Date();
  ms= new Date() - start3 + ' ms';
  //console.log(data);
- const x3= "\nGet\t\t /api/v1/on-covid-19/xml \t\t200\t\t"+ms+"\t\t";
+ const x3= '\nGet\t\t /api/v1/on-covid-19/xml \t\t200\t\t'+ms+'\t\t';
  fs.appendFileSync('log.xml', x3);
  console.log('Request took:', ms);
  
 });
 
 app.listen(8080, ()  => {
- console.log("Server running on port 8080");
+ console.log('Server running on port 8080');
 });
 
 }
