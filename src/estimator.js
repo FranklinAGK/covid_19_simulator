@@ -37,8 +37,6 @@ get_power= (x)=>
 }
 const covid19ImpactEstimator = (data) =>
 {	
-	const power= 1;
-	
 	const currentlyInfected= data.reportedCases * 10;
 	const severeImpactCurrentlyInfected= data.reportedCases * 50;
 	// demo day for testing is 58 as ref in the data json object, this can be changed later. 
