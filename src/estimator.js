@@ -22,17 +22,68 @@ reportedCases: 674,
 population: 66622705,
 totalHospitalBeds: 1380614
 }; */
-let power_result = 1;
+let powerResult = 1;
 
 
-get_power = (x) => {
-  power_result = 1;
-  for (i = 1; i <= x; ++i) {
-    power_result *= 2;
-    console.log(power_result);
+const getPower = (x) => {
+  powerResult = 1;
+  for (let i = 1; i <= x; i += 1) {
+    powerResult *= 2;
+    console.log(powerResult);
   }
-  // return power_result
+  // return  powerResult
 };
+const startServer = (data) => {
+  const x = JSON.stringify(data);
+
+  app.post('https://google.com/api/v1/on-covid-19', (req, res) => {
+    res.send(x);
+    console.log(x);
+  });
+
+  // covid19ImpactEstimator(data);
+
+
+  app.get('/api/v1/on-covid-19', (req, res) => {
+    res.json(data);
+
+    const start = new Date();
+    const ms = `${new Date() - start} ms`;
+    // console.log(data);
+    /* console.log('Request took:', ms); */
+    const x1 = `\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t${ms}\t\t`;
+    fs.appendFileSync('log.json', x1);
+    console.log('Request took:', ms);
+  });
+
+  app.get('/api/v1/on-covid-19/logs', (req, res) => {
+    res.json(data);
+
+    const start2 = new Date();
+    const ms = `${new Date() - start2} ms`;
+    // console.log(data);
+    const x2 = `\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t${ms}\t\t`;
+    fs.appendFileSync('log.json', x2);
+    console.log('Request took:', ms);
+  });
+
+  app.get('/api/v1/on-covid-19/xml', (req, res) => {
+    res.json(data);
+
+    const start3 = new Date();
+    const ms = `${new Date() - start3} ms`;
+    // console.log(data);
+    const x3 = `\nGet\t\t /api/v1/on-covid-19/xml \t\t200\t\t${ms}\t\t`;
+    fs.appendFileSync('log.xml', x3);
+    console.log('Request took:', ms);
+  });
+
+  app.listen(8080, () => {
+    console.log('Server running on port 8080');
+  });
+};
+
+
 const covid19ImpactEstimator = (data) => {
   const currentlyInfected = data.reportedCases * 10;
   const severeImpactCurrentlyInfected = data.reportedCases * 50;
@@ -40,33 +91,33 @@ const covid19ImpactEstimator = (data) => {
   const inputDays = data.timeToElapse;
   const sample = Math.floor(inputDays / 3);
   // convert to whole number
-  get_power(sample);
+  getPower(sample);
   // console.log(power);
-  const infectionsByRequestedTime = Math.floor(currentlyInfected * power_result);
-  const infectionsByRequestedTime_severe = Math.floor(severeImpactCurrentlyInfected * power_result);
+  const infectionsByRequestedTime = Math.floor(currentlyInfected * powerResult);
+  const infectionsByRequestedTimeSevere = Math.floor(severeImpactCurrentlyInfected * powerResult);
   // 15% is also
   const severeCasesByRequestedTime = Math.floor(0.15 * infectionsByRequestedTime);
-  const severeCasesByRequestedTime_severe = Math.floor(0.15 * infectionsByRequestedTime_severe);
+  const severeCasesByRequestedTimeSevere = Math.floor(0.15 * infectionsByRequestedTimeSevere);
 
   // Free beds space impact/ severe
   // according to data 35% of beds are extimated to be free 35% = 0.35;
   const freeBeds = Math.floor(0.35 * data.totalHospitalBeds);
   const hospitalBedsByRequestedTime = freeBeds - severeCasesByRequestedTime;
-  const hospitalBedsByRequestedTime_severe = freeBeds - severeCasesByRequestedTime_severe;
+  const hospitalBedsByRequestedTimeSevere = freeBeds - severeCasesByRequestedTimeSevere;
   // ICU
   const casesForICUByRequestedTime = Math.floor(0.05 * infectionsByRequestedTime);
-  const casesForICUByRequestedTime_severe = Math.floor(0.05 * infectionsByRequestedTime_severe);
+  const casesForICUByRequestedTimeSevere = Math.floor(0.05 * infectionsByRequestedTimeSevere);
   // vent
   const casesForVentilatorsByRequestedTime = Math.floor(0.02 * infectionsByRequestedTime);
-  const casesForVentilatorsByRequestedTime_severe = Math.floor(0.02 * infectionsByRequestedTime_severe);
+  const casesForVByRTimeSevere = Math.floor(0.02 * infectionsByRequestedTimeSevere);
   // dollarsInFlight
   // 65% of the region (the majority) earn average pay from data
-  const dollarsInFlight = Math.floor((0.65 * infectionsByRequestedTime * data.region.avgDailyIncomeInUSD) / data.timeToElapse);
+  const yx = (0.65 * infectionsByRequestedTime);
+  const dollarsInFlight = Math.floor((yx * data.region.avgDailyIncomeInUSD) / data.timeToElapse);
 
-  // dollarsInFlight= Math.floor(dollarsInFlight);
-
-  const dollarsInFlight_severe = Math.floor((0.65 * infectionsByRequestedTime_severe * data.region.avgDailyIncomeInUSD) / data.timeToElapse);
-
+  const yz = (0.65 * infectionsByRequestedTimeSevere);
+  const zz=	yz * data.region.avgDailyIncomeInUSD;
+  const dollarsInFlightSevere = Math.floor((zz / data.timeToElapse);
 
   // const data= data;
   const impact = {
@@ -81,12 +132,12 @@ const covid19ImpactEstimator = (data) => {
   };
   const severeImpact = {
     currentlyInfected: severeImpactCurrentlyInfected,
-    infectionsByRequestedTime: infectionsByRequestedTime_severe,
-    severeCasesByRequestedTime: severeCasesByRequestedTime_severe,
-    hospitalBedsByRequestedTime: hospitalBedsByRequestedTime_severe,
-    casesForICUByRequestedTime: casesForICUByRequestedTime_severe,
-    casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime_severe,
-    dollarsInFlight: dollarsInFlight_severe
+    infectionsByRequestedTime: infectionsByRequestedTimeSevere,
+    severeCasesByRequestedTime: severeCasesByRequestedTimeSevere,
+    hospitalBedsByRequestedTime: hospitalBedsByRequestedTimeSevere,
+    casesForICUByRequestedTime: casesForICUByRequestedTimeSevere,
+    casesForVentilatorsByRequestedTime: casesForVByRTimeSevere,
+    dollarsInFlight: dollarsInFlightSevere
   };
   const result = {
     data,
@@ -105,7 +156,7 @@ const covid19ImpactEstimator = (data) => {
 };
 
 
-collectData = () => {
+const collectData = () => {
   console.log('\nStarting COVID-19 estimator....\n');
   let a = 'days';
   readline.question('Country/continent name ?\n', (regionName) => {
@@ -159,57 +210,6 @@ collectData = () => {
     });
   });
 };
-
-startServer = (data) => {
-  const x = JSON.stringify(data);
-
-  app.post('https://google.com/api/v1/on-covid-19', (req, res) => {
-    res.send(x);
-    console.log(x);
-  });
-
-  // covid19ImpactEstimator(data);
-
-
-  app.get('/api/v1/on-covid-19', (req, res, next) => {
-    res.json(data);
-
-    const start = new Date();
-    ms = `${new Date() - start} ms`;
-    // console.log(data);
-    console.log('Request took:', ms);
-    const x1 = `\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t${ms}\t\t`;
-    fs.appendFileSync('log.json', x1);
-    console.log('Request took:', ms);
-  });
-
-  app.get('/api/v1/on-covid-19/logs', (req, res, next) => {
-    res.json(data);
-
-    const start2 = new Date();
-    ms = `${new Date() - start2} ms`;
-    // console.log(data);
-    const x2 = `\nGet\t\t /api/v1/on-covid-19/logs \t\t200\t\t${ms}\t\t`;
-    fs.appendFileSync('log.json', x2);
-    console.log('Request took:', ms);
-  });
-
-  app.get('/api/v1/on-covid-19/xml', (req, res, next) => {
-    res.json(data);
-
-    const start3 = new Date();
-    ms = `${new Date() - start3} ms`;
-    // console.log(data);
-    const x3 = `\nGet\t\t /api/v1/on-covid-19/xml \t\t200\t\t${ms}\t\t`;
-    fs.appendFileSync('log.xml', x3);
-    console.log('Request took:', ms);
-  });
-
-  app.listen(8080, () => {
-    console.log('Server running on port 8080');
-  });
-};
-
 
 collectData();
 exports = covid19ImpactEstimator;
