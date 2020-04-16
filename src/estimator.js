@@ -1,10 +1,14 @@
 const express = require('express');
+
 const fs = require('fs');
+
 const app = express();
+
 const readline = require('readline').createInterface({
 	input: process.stdin,
 	output: process.stdout
 })
+
 /*data={
 region: {
 name: "Africa",
@@ -18,21 +22,23 @@ reportedCases: 674,
 population: 66622705,
 totalHospitalBeds: 1380614
 };*/
+var power_result=1;
 
 
 get_power= (x)=>
 {
+	power_result=1;
 	for (i= 1; i <= x; ++i)
     {
-       power_result=x*2;
-       //console.log(power_result)
+       power_result= power_result*2;
+       console.log(power_result)
     }
     //return power_result
 }
 const covid19ImpactEstimator = (data) =>
 {	
 	const power= 1;
-	const power_result=1;
+	
 	const currentlyInfected= data.reportedCases * 10;
 	const severeImpactCurrentlyInfected= data.reportedCases * 50;
 	// demo day for testing is 58 as ref in the data json object, this can be changed later. 
@@ -87,13 +93,20 @@ const covid19ImpactEstimator = (data) =>
 		'casesForVentilatorsByRequestedTime':casesForVentilatorsByRequestedTime_severe,
 		'dollarsInFlight':dollarsInFlight_severe
 	};
-	console.log('\n Data used : ');
+	const result={
+	'data':data,
+	'impact':impact,
+	'severe':severeImpact
+}
+	/*console.log('\n Data used : ');
 	console.log(data);
 	console.log('\n Possible impact estimation : ');
 	console.log(impact);
 	console.log('\n Severe Impact estimation : ');
-	console.log(severeImpact);
-	startServer(data);
+	console.log(severeImpact);*/
+	console.log('\n\n\n -----result test----\n\n ');
+	console.log(result);
+	startServer(result);
 }
 
 
@@ -168,7 +181,8 @@ startServer = (data) =>
 {
 
 const x= JSON.stringify(data);
-app.post('/api/v1/on-covid-19', function (req, res) {
+
+app.post('https://google.com/api/v1/on-covid-19', function (req, res) {
  res.send(x);
  console.log(x);
 });
