@@ -116,8 +116,8 @@ const covid19ImpactEstimator = (data) => {
   const dollarsInFlight = Math.floor((yx * data.region.avgDailyIncomeInUSD) / data.timeToElapse);
 
   const yz = (0.65 * infectionsByRequestedTimeSevere);
-  const zz=	yz * data.region.avgDailyIncomeInUSD;
-  const dollarsInFlightSevere = Math.floor((zz / data.timeToElapse);
+  const zz = yz * data.region.avgDailyIncomeInUSD;
+  const dollarsInFlightSevere = Math.floor(zz / data.timeToElapse);
 
   // const data= data;
   const impact = {
@@ -144,12 +144,7 @@ const covid19ImpactEstimator = (data) => {
     impact,
     severe: severeImpact
   };
-  /* console.log('\n Data used : ');
-	console.log(data);
-	console.log('\n Possible impact estimation : ');
-	console.log(impact);
-	console.log('\n Severe Impact estimation : ');
-	console.log(severeImpact); */
+
   console.log('\n\n\n -----result test----\n\n ');
   console.log(result);
   startServer(result);
@@ -168,20 +163,20 @@ const collectData = () => {
               readline.question('Reported cases ?\n', (repCases) => {
                 readline.question('Total population ?\n', (populationz) => {
                   readline.question('Total hopital beds ?\n', (totalBeds) => {
- 	switch (type) {
+                    switch (type) {
                       case 'days':
-
                         a = days;
                         break;
                       case 'weeks':
- 	// There would always be 7 days in a week.
- 	a = days * 7;
+
+                        a = days * 7;
 
                         break;
                       case 'months':
- 	// from description, assume that there would always be 30 days in a month.
- 	a = days * 30;
+                        // from description, assume that there would always be 30 days in a month.
+                        a = days * 30;
                         break;
+                      default:
                     }
 
                     const data = {
