@@ -148,6 +148,7 @@ const covid19ImpactEstimator = (data) => {
   console.log('\n\n\n -----result test----\n\n ');
   console.log(result);
   startServer(result);
+  return result;
 };
 
 
